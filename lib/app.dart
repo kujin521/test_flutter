@@ -1,9 +1,10 @@
 // ignore: file_names
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_flutter/http/core/hi_error.dart';
-import 'package:test_flutter/http/core/hi_net.dart';
-import 'package:test_flutter/http/request/test_request.dart';
+
+import 'http/core/hi_error.dart';
+import 'http/core/hi_net.dart';
+import 'http/request/test_request.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _incrementCounter() async {
     TestRequest request = TestRequest();
-    request.add("aa", "bb");
+    request.add("name", "bb");
     try {
       var result = await HiNet().fire(request);
     } on NeedAuth catch (e) {

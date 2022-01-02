@@ -2,14 +2,11 @@ enum HttpMethod { GET, POST, DELETE }
 
 //基础请求
 abstract class BaseRequest {
-  //curl -X POST -H  "Accept:*/*" -H  "Request-Origion:Knife4j" -H"
-  //""Content-Type:application/json" -d "{\"password\":\"zlz123456\",\"username\":\"zhaolizhi\"}"
-  //"http://192.168.4.4:8080/user/login"
   var pathParams;
-  var useHttps = true;
+  var useHttps = false;
 
   String authority() {
-    return "plm.lunan.com.cn";
+    return "localhost";
   }
 
   HttpMethod httpMethod();

@@ -1,4 +1,4 @@
-import 'package:test_flutter/http/core/hi_net_adapter.dart';
+import 'package:test_flutter/http/core/adapter/hi_net_adapter.dart';
 import 'package:test_flutter/http/request/base_request.dart';
 
 class MockAdapter extends HiNetAdapter {
