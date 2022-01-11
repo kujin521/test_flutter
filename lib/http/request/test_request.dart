@@ -3,7 +3,7 @@ import 'package:test_flutter/http/request/base_request.dart';
 class TestRequest extends BaseRequest {
   @override
   HttpMethod httpMethod() {
-    return HttpMethod.GET;
+    return HttpMethod.POST;
   }
 
   @override
@@ -13,6 +13,6 @@ class TestRequest extends BaseRequest {
 
   @override
   String path() {
-    return '/greeting';
+    return '/weihu/online';
   }
 }

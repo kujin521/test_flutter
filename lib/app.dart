@@ -1,6 +1,10 @@
 // ignore: file_names
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_flutter/db/hi_cache.dart';
+import 'package:test_flutter/models/owner.dart';
 
 import 'http/core/hi_error.dart';
 import 'http/core/hi_net.dart';
@@ -52,11 +56,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  @override
+  void initState() {
+    HiCache.preInit();
+  }
+
   _incrementCounter() async {
+    print("object");
+    test_json();
+    await test_http();
+  }
+
+  Future<void> test_http() async {
     TestRequest request = TestRequest();
-    request.add("name", "bb");
+    request.add("name", "传递的参数");
     try {
       var result = await HiNet().fire(request);
+      print(result);
     } on NeedAuth catch (e) {
       print(e);
     } on NeedLogin catch (e) {
@@ -116,5 +132,28 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void test_json() {
+    const jsonString =
+        "{\"code\":200,\"message\":\"OK\",\"data\":\"当前在线人数：1\"}";
+
+    Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+    print('name ${jsonMap['data']}');
+  }
+
+  void test1() {
+    var ownerMap = {"name": "账号三", "face": "htttpsss", "fans": 110};
+    Owner owner = Owner.fromJson(ownerMap);
+    print(owner.name);
+    print(owner.face);
+    print(owner.fans);
+  }
+
+  void test2() {
+    HiCache.getInstance().setString("aa", "1234");
+    var value = HiCache.getInstance().get("aa");
+    print('value: $value');
   }
 }

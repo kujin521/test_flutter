@@ -6,7 +6,7 @@ abstract class BaseRequest {
   var useHttps = false;
 
   String authority() {
-    return "localhost";
+    return "plm.lunan.com.cn";
   }
 
   HttpMethod httpMethod();
