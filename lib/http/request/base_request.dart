@@ -1,3 +1,5 @@
+import 'package:test_flutter/http/dao/login_dao.dart';
+
 enum HttpMethod { GET, POST, DELETE }
 
 //基础请求
@@ -6,7 +8,7 @@ abstract class BaseRequest {
   var useHttps = false;
 
   String authority() {
-    return "plm.lunan.com.cn";
+    return "jsonplaceholder.typicode.com";
   }
 
   HttpMethod httpMethod();
@@ -30,6 +32,11 @@ abstract class BaseRequest {
     } else {
       uri = Uri.http(authority(), pathStr, params);
     }
+
+    if (needLogin()) {
+      add(LoginDao.BOARDING_PASS, LoginDao.getBordingPass());
+    }
+
     return uri.toString();
   }
 
