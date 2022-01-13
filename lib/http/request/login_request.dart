@@ -3,7 +3,7 @@ import 'base_request.dart';
 class LoginRequest extends BaseRequest {
   @override
   HttpMethod httpMethod() {
-    return HttpMethod.POST;
+    return HttpMethod.GET;
   }
 
   @override
@@ -13,6 +13,6 @@ class LoginRequest extends BaseRequest {
 
   @override
   String path() {
-    return '/weihu/online';
+    return '/posts/1';
   }
 }

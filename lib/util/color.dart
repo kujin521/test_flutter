@@ -17,5 +17,5 @@ const MaterialColor white = const MaterialColor(
 );
 
 //主色调
-const MaterialColor primary =
-    MaterialColor(0xffff9bd5, <int, Color>{50: Color(0xffff9db5)});
+const MaterialColor primary = const MaterialColor(
+    0xfffb7299, const <int, Color>{50: const Color(0xffff9db5)});

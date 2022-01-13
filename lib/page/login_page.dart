@@ -8,17 +8,14 @@ import 'package:test_flutter/widget/lgoin_effect.dart';
 import 'package:test_flutter/widget/login_button.dart';
 import 'package:test_flutter/widget/login_input.dart';
 
-class Registration extends StatefulWidget {
-  //跳转登录页面
-  final VoidCallback onJumpToLogin;
-
-  const Registration({Key? key, required this.onJumpToLogin}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _RegistrationState createState() => _RegistrationState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _RegistrationState extends State<Registration> {
+class _LoginPageState extends State<LoginPage> {
   //是否选择密码框
   bool protect = false;
   //是否可以登录
@@ -26,13 +23,10 @@ class _RegistrationState extends State<Registration> {
   //登录信息
   String? userName;
   String? password;
-  String? rePassword;
-  String? imoocId;
-  String? orderId;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar("注册", "登录", widget.onJumpToLogin),
+      appBar: appBar("注册", "登录", () {}),
       body: Container(
           child: ListView(
         //只适用键盘弹起，防止遮挡
@@ -61,35 +55,10 @@ class _RegistrationState extends State<Registration> {
               })
             },
           ),
-          LoginInput(
-            title: "确认密码",
-            hint: "请再次输入密码",
-            lineStretch: true,
-            obscureText: true,
-            onChange: (text) {
-              rePassword = text;
-              checkInput();
-            },
-            focusChanged: (focus) => {
-              setState(() {
-                protect = focus;
-              })
-            },
-          ),
-          LoginInput(
-            title: "慕课网ID",
-            hint: "请输入你的慕课网ID",
-            lineStretch: true,
-            keboardType: TextInputType.number,
-            onChange: (text) {
-              imoocId = text;
-              checkInput();
-            },
-          ),
           Padding(
-            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
             child: LoginButton(
-              '注册',
+              '登录',
               enable: loginEnable,
               onPressed: send,
             ),
@@ -102,11 +71,7 @@ class _RegistrationState extends State<Registration> {
   //检查输入框
   void checkInput() {
     bool enable = false;
-    if (userName!.isNotEmpty &&
-        password!.isNotEmpty &&
-        rePassword!.isNotEmpty &&
-        imoocId!.isNotEmpty &&
-        orderId!.isNotEmpty) {
+    if (userName!.isNotEmpty && password!.isNotEmpty) {
       enable = true;
     }
     setState(() {
@@ -116,8 +81,7 @@ class _RegistrationState extends State<Registration> {
 
   void send() async {
     try {
-      var result =
-          await LoginDao.regisration(userName!, password!, imoocId!, orderId!);
+      var result = await LoginDao.login(userName!, password!);
       showToast(result['userId'].toString());
       if (result['code'] == 0) {
         showToast('登录成功');
@@ -131,19 +95,5 @@ class _RegistrationState extends State<Registration> {
         showWarnToast("错误码：${e.code} 错误信息：${e.message} 错误信息：${e.data}");
       }
     }
-  }
-
-  void checkParams() {
-    String? tips;
-    if (password != rePassword) {
-      tips = '两次密码不一致';
-    } else if (orderId!.length != 4) {
-      tips = '请输入订单后四位';
-    }
-    if (tips != null) {
-      print(tips);
-      return;
-    }
-    send();
   }
 }
