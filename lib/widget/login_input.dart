@@ -74,22 +74,27 @@ class _LoginInputState extends State<LoginInput> {
 
   _input() {
     return Expanded(
+      child: Listener(
+        onPointerDown: (e) => FocusScope.of(context).requestFocus(_focusNode),
         child: TextField(
-      focusNode: _focusNode,
-      onChanged: widget.onChange,
-      obscureText: widget.obscureText,
-      keyboardType: widget.keboardType,
-      autofocus: !widget.obscureText,
-      cursorColor: primary,
-      style: const TextStyle(
-          fontSize: 16, color: Colors.black, fontWeight: FontWeight.w300),
+          onEditingComplete: () => FocusScope.of(context).nextFocus(),
+          focusNode: _focusNode,
+          onChanged: widget.onChange,
+          obscureText: widget.obscureText,
+          keyboardType: widget.keboardType,
+          autofocus: !widget.obscureText,
+          cursorColor: primary,
+          style: const TextStyle(
+              fontSize: 16, color: Colors.black, fontWeight: FontWeight.w300),
 
-      //输入框样式
-      decoration: InputDecoration(
-          contentPadding: const EdgeInsets.only(left: 20, right: 20),
-          border: InputBorder.none,
-          hintText: widget.hint,
-          hintStyle: const TextStyle(fontSize: 15, color: Colors.grey)),
-    ));
+          //输入框样式
+          decoration: InputDecoration(
+              contentPadding: const EdgeInsets.only(left: 20, right: 20),
+              border: InputBorder.none,
+              hintText: widget.hint,
+              hintStyle: const TextStyle(fontSize: 15, color: Colors.grey)),
+        ),
+      ),
+    );
   }
 }
